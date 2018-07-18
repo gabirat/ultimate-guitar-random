@@ -57,7 +57,8 @@
             song_key.innerHTML = random_song.tonality_name;
             let href = document.createAttribute("href");
             href.value = random_song.tab_url;
-            let tab_link = document.createElement("a").setAttributeNode(href);
+            let tab_link = document.createElement("a");
+            tab_link.setAttributeNode(href);
             tab_link.appendChild(document.createTextNode(random_song.tab_url));
             song_link.appendChild(tab_link);
         });
