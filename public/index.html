@@ -46,7 +46,7 @@
         const get_random_song = document.querySelector("[data-js=get-random-song]");
 
         get_random_song.addEventListener("click", async (e)=> {
-            let random_song = await (await fetch(`http://gabirat:3000/random-song?type=${input_type.value}&order=${input_order.value}`, {mode: "cors"})).json();
+            let random_song = await (await fetch(`http://gabirat.pl:3000/random-song?type=${input_type.value}&order=${input_order.value}`, {mode: "cors"})).json();
             if(random_song.error) {
                 alert(random_song.error.msg);
                 return;
