@@ -51,15 +51,18 @@
                 alert(random_song.error.msg);
                 return;
             }
-            song_artist.innerHTML = random_song.artist_name;
-            song_title.innerHTML = random_song.song_name;
-            song_rating.innerHTML = random_song.rating;
-            song_key.innerHTML = random_song.tonality_name;
-            song_link.innerHTML = "";
+            song_artist.innerHTML = "Artist: " + random_song.artist_name;
+            song_title.innerHTML = "Title: " + random_song.song_name;
+            song_rating.innerHTML = "Rating: " + random_song.rating;
+            song_key.innerHTML = "Key: " + random_song.tonality_name;
+            song_link.innerHTML = "Link: ";
             let href = document.createAttribute("href");
+            let target = document.createAttribute("target");
             href.value = random_song.tab_url;
+            target.value = "_blank";
             let tab_link = document.createElement("a");
             tab_link.setAttributeNode(href);
+            tab_link.setAttributeNode(target);
             tab_link.appendChild(document.createTextNode(random_song.tab_url));
             song_link.appendChild(tab_link);
         });
