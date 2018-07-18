@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Ultimate Guitar - Random Song</title>
+</head>
+<body>
+    <header>
+        <h1>Roll a random song form a poll of 1000 the most popular songs on Ultimate Guitar!</h1>
+    </header>
+    <main>
+        <button data-js="get-random-song"><img src="img/dice.png"/><p>Roll a song</p></button>
+        <form action="/random" method="get">
+            <select name="type" data-js="input-type">
+                <option value="Chords">Chords</option>
+                <option value="Tabs">Tabs</option>
+            </select>
+            <select name="order" data-js="input-order">
+                <option value="rating_desc">Top Rated</option>
+                <option value="hitsdaily_desc">Popular Today</option>
+                <option value="hitstotal_desc">Popular All Time</option>
+            </select>
+        </form>
+        <div class="song">
+            <p class="song-info" data-js="song-artist"></p>
+            <p class="song-info" data-js="song-title"></p>
+            <p class="song-info" data-js="song-rating"></p>
+            <p class="song-info" data-js="song-key"></p>
+            <p class="song-info" data-js="song-link"></p>
+        </div>
+    </main>
+    <footer>
+        <p>App uses data from Ultimate Guitar. Created by Gabriel Ratajczak &copy; 2018</p>
+    </footer>
+    <script>
+        const song_artist = document.querySelector("[data-js=song-artist]");
+        const song_title = document.querySelector("[data-js=song-title]");
+        const song_rating = document.querySelector("[data-js=song-rating]");
+        const song_key = document.querySelector("[data-js=song-key]");
+        const song_link = document.querySelector("[data-js=song-link]");
+
+        const input_type = document.querySelector("[data-js=input-type]");
+        const input_order = document.querySelector("[data-js=input-order]");
+        const get_random_song = document.querySelector("[data-js=get-random-song]");
+
+        get_random_song.addEventListener("click", async (e)=> {
+            let random_song = await (await fetch(`http://localhost:3000/random?type=${input_type.value}&order=${input_order.value}`)).json();
+            if(random_song.error) {
+                alert(random_song.error.msg);
+                return;
+            }
+            song_artist.innerHTML = random_song.artist_name;
+            song_title.innerHTML = random_song.song_name;
+            song_rating.innerHTML = random_song.rating;
+            song_key.innerHTML = random_song.tonality_name;
+            let tab_link = document.createElement("a").setAttribute("href", random_song.tab_url);
+            song_link.appendChild(tab_link);
+        });
+    </script>
+</body>
+</html>
