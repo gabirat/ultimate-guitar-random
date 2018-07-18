@@ -46,7 +46,7 @@
         const get_random_song = document.querySelector("[data-js=get-random-song]");
 
         get_random_song.addEventListener("click", async (e)=> {
-            let random_song = await (await fetch(`http://localhost:3000/random?type=${input_type.value}&order=${input_order.value}`)).json();
+            let random_song = await (await fetch(`http://gabirat:3000/random-song?type=${input_type.value}&order=${input_order.value}`, {mode: "cors"})).json();
             if(random_song.error) {
                 alert(random_song.error.msg);
                 return;
@@ -55,7 +55,10 @@
             song_title.innerHTML = random_song.song_name;
             song_rating.innerHTML = random_song.rating;
             song_key.innerHTML = random_song.tonality_name;
-            let tab_link = document.createElement("a").setAttribute("href", random_song.tab_url);
+            let href = document.createAttribute("href");
+            href.value = random_song.tab_url;
+            let tab_link = document.createElement("a").setAttributeNode(href);
+            tab_link.appendChild(document.createTextNode(random_song.tab_url));
             song_link.appendChild(tab_link);
         });
     </script>
